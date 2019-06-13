@@ -1,0 +1,17 @@
+[Unit]
+Description=Minerva Website
+
+[Service]
+WorkingDirectory=/var/dotnetcore/Minerva.Web
+ExecStart=/usr/bin/dotnet /var/aspnetcore/Minerva.Web/Minerva.Web.dll
+Restart=always
+RestartSec=10
+SyslogIdentifier=minerva.web
+User=root
+Environment=ASPNETCORE_ENVIRONMENT=Production
+Environment=DOTNET_PRINT_TELEMETRY_MESSAGE=false
+Environment=AppId=
+Environment=AppSecret=
+
+[Install]
+WantedBy=multi-user.target

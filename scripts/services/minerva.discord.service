@@ -1,0 +1,17 @@
+[Unit]
+Description=Minerva Discord Bot
+
+[Service]
+WorkingDirectory=/var/dotnetcore/Minerva.Discord
+ExecStart=/usr/bin/dotnet /var/dotnetcore/Minerva.Discord/Minerva.Discord.dll
+Restart=always
+RestartSec=10
+SyslogIdentifier=minerva.discord
+User=root
+Environment=ASPNETCORE_ENVIRONMENT=Production
+Environment=DOTNET_PRINT_TELEMETRY_MESSAGE=false
+Environment=Minerva=
+Environment=Riot=
+
+[Install]
+WantedBy=multi-user.target
