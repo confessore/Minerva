@@ -4,7 +4,6 @@ using Minerva.Discord.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace Minerva.Discord.Services
@@ -30,11 +29,11 @@ namespace Minerva.Discord.Services
                         await guild.CreateRoleAsync(pair.Key, new GuildPermissions(pair.Value.permissions), pair.Value.color, ShouldHoistRole(pair.Key) ? true : false);
         }
 
-        public Task StartRoleDelegationThreads()
+        public Task StartRoleDelegationTasks()
         {
             foreach (var guild in client.Guilds)
             {
-                new Thread(async () =>
+                _ = Task.Run(async () =>
                 {
                     while (true)
                     {
@@ -65,7 +64,7 @@ namespace Minerva.Discord.Services
                             }
                         }
                     }
-                }).Start();
+                });
             }
             return Task.CompletedTask;
         }

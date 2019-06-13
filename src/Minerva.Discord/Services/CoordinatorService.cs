@@ -3,7 +3,6 @@ using Minerva.Discord.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace Minerva.Discord.Services
@@ -23,15 +22,15 @@ namespace Minerva.Discord.Services
         Dictionary<SocketGuildUser, (SocketGuild guild, SocketRole tier, SocketRole lane)> FlexCoordinator = new Dictionary<SocketGuildUser, (SocketGuild, SocketRole, SocketRole)>();
         Dictionary<SocketGuildUser, (bool add, SocketGuild guild, SocketRole tier, SocketRole lane)> FlexQueue = new Dictionary<SocketGuildUser, (bool, SocketGuild, SocketRole, SocketRole)>();
 
-        public async Task StartCoordinatorThread()
+        public async Task StartCoordinatorTasks()
         {
-            await StartDuoCoordinatorThread();
-            await StartFlexCoordinatorThread();
+            await StartDuoCoordinatorTask();
+            await StartFlexCoordinatorTask();
         }
 
-        Task StartDuoCoordinatorThread()
+        Task StartDuoCoordinatorTask()
         {
-            new Thread(async () =>
+            _ = Task.Run(async () =>
             {
                 while (true)
                 {
@@ -59,13 +58,13 @@ namespace Minerva.Discord.Services
                         }
                     }
                 }
-            }).Start();
+            });
             return Task.CompletedTask;
         }
 
-        Task StartFlexCoordinatorThread()
+        Task StartFlexCoordinatorTask()
         {
-            new Thread(async () =>
+            _ = Task.Run(async () =>
             {
                 while (true)
                 {
@@ -93,7 +92,7 @@ namespace Minerva.Discord.Services
                         }
                     }
                 }
-            }).Start();
+            });
             return Task.CompletedTask;
         }
 

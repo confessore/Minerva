@@ -73,8 +73,8 @@ namespace Minerva.Discord.Services
             await permissionService.VerifyPermissions();
             await roleService.GenerateRolesAsync();
             await channelService.GenerateChannelsAsync();
-            await roleService.StartRoleDelegationThreads();
-            await coordinatorService.StartCoordinatorThread();
+            await roleService.StartRoleDelegationTasks();
+            await coordinatorService.StartCoordinatorTasks();
         }
     }
 }
