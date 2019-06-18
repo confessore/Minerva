@@ -8,6 +8,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Minerva.Web.Data;
+using Minerva.Web.Models.Identity;
+using Minerva.Web.Services;
+using Minerva.Web.Services.Interfaces;
 using System;
 
 namespace Minerva.Web
@@ -33,7 +36,7 @@ namespace Minerva.Web
 
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlite("Data Source = minerva.db"));
-            services.AddDefaultIdentity<IdentityUser>()
+            services.AddDefaultIdentity<ApplicationUser>()
                 .AddDefaultUI(UIFramework.Bootstrap4)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
@@ -42,9 +45,11 @@ namespace Minerva.Web
                 {
                     x.AppId = Environment.GetEnvironmentVariable("AppId");
                     x.AppSecret = Environment.GetEnvironmentVariable("AppSecret");
-                    foreach (var scope in new string[] { "identify", "connections", "guilds" })
-                        x.Scope.Add(scope);
+                    x.Scope.Add("email connections");
+                    x.SaveTokens = true;
                 });
+
+            services.AddSingleton<IDiscordService, DiscordService>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }

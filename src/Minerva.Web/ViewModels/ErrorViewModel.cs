@@ -1,4 +1,4 @@
-namespace Minerva.Web.Models
+namespace Minerva.Web.ViewModels
 {
     public class ErrorViewModel
     {
